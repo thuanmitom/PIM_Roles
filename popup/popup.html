@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>Entra PIM Roles</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ambient background: two slow-drifting colour blobs -->
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <defs>
+              <linearGradient id="shieldFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity="0.95" />
+                <stop offset="1" stop-color="#fff" stop-opacity="0.72" />
+              </linearGradient>
+            </defs>
+            <path d="M12 2.4 4.6 5.6v5.9c0 4.6 3.1 8.4 7.4 9.7 4.3-1.3 7.4-5.1 7.4-9.7V5.6L12 2.4Z"
+                  fill="url(#shieldFill)" />
+            <path d="M8.5 12.1 10.9 14.6 15.6 9.5" fill="none" stroke="#5b6bf5"
+                  stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="brand-pulse" aria-hidden="true"></span>
+        </span>
+        <div class="brand-text">
+          <div class="brand-title">Entra PIM Roles</div>
+          <div class="brand-sub" id="whoSub">Checking session…</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="btnTheme" type="button" title="Switch theme" aria-label="Switch theme">
+          <svg class="ico-sun" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+            <circle cx="10" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6 14 6M6 14l-1.4 1.4"
+                  stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <svg class="ico-moon" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+            <path d="M16.2 12.4A6.8 6.8 0 0 1 7.6 3.8a6.8 6.8 0 1 0 8.6 8.6Z" fill="none"
+                  stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="btnRefresh" type="button" title="Reload" aria-label="Reload">
+          <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+            <path d="M16 10a6 6 0 1 1-1.8-4.3M16 3.4V7h-3.6" fill="none" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="btnMenu" type="button" title="Menu" aria-label="Menu" aria-haspopup="true">
+          <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true">
+            <path d="M3.5 6h13M3.5 10h13M3.5 14h9" fill="none" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="menu" id="menu" hidden role="menu">
+        <button class="menu-item" data-menu="schedules" role="menuitem" type="button">
+          <span class="menu-ico ico-sched">
+            <svg viewBox="0 0 20 20" width="15" height="15"><path d="M4 5h12v11H4zM4 8h12M8 3v3M12 3v3"
+              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          <span class="menu-label">Schedules</span>
+          <span class="menu-badge" id="badgeJobs"></span>
+        </button>
+        <button class="menu-item" data-menu="history" role="menuitem" type="button">
+          <span class="menu-ico ico-hist">
+            <svg viewBox="0 0 20 20" width="15" height="15"><circle cx="10" cy="10" r="6.5" fill="none"
+              stroke="currentColor" stroke-width="1.5"/><path d="M10 6.6V10l2.6 1.6" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="menu-label">Activation history</span>
+        </button>
+        <button class="menu-item" data-menu="perms" role="menuitem" type="button">
+          <span class="menu-ico ico-perm">
+            <svg viewBox="0 0 20 20" width="15" height="15"><path d="M10 2.8 4.6 5.1v4.3c0 3.3 2.2 6.1 5.4 7.1
+              3.2-1 5.4-3.8 5.4-7.1V5.1L10 2.8Z" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linejoin="round"/><path d="M7.7 9.9 9.5 11.8 12.6 8" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="menu-label">My permissions</span>
+        </button>
+        <div class="menu-sep"></div>
+        <button class="menu-item" data-menu="portals" role="menuitem" type="button">
+          <span class="menu-ico ico-portal">
+            <svg viewBox="0 0 20 20" width="15" height="15"><circle cx="10" cy="10" r="6.6" fill="none"
+              stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h13M10 3.4c2 2 2 11.2 0 13.2
+              -2-2-2-11.2 0-13.2Z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+          </span>
+          <span class="menu-label">Admin portals</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="stats" id="stats">
+      <div class="stat is-total">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat is-eligible">
+        <div class="stat-num" id="statEligible">—</div>
+        <div class="stat-label">Eligible</div>
+      </div>
+      <div class="stat is-live">
+        <div class="stat-num" id="statActive">—</div>
+        <div class="stat-label">Active</div>
+      </div>
+    </div>
+
+    <main class="stage" id="stage">
+      <section id="roleList"></section>
+    </main>
+
+    <div class="actionbar" id="actionbar" hidden>
+      <div class="reasons" id="reasonSheet" hidden>
+        <div class="reasons-head">
+          <span class="reasons-title">Reason per role</span>
+          <button class="btn btn-sm" id="btnReasonsFill" type="button">Apply shared to all</button>
+        </div>
+        <div class="reasons-list" id="reasonList"></div>
+      </div>
+      <div class="actionbar-top">
+        <div class="actionbar-count"><strong id="selCount">0</strong><span>selected</span></div>
+        <button class="btn btn-sm btn-ghost" id="btnReasons" type="button" aria-expanded="false">
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M2.5 4h11M2.5 8h11M2.5 12h7" fill="none" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span id="reasonsLabel">Reason per role</span>
+        </button>
+      </div>
+      <div class="actionbar-row">
+        <label class="field field-sm">
+          <span>Duration</span>
+          <input id="inpDuration" type="text" value="8h" spellcheck="false" autocomplete="off" />
+        </label>
+        <label class="field field-grow">
+          <span>Shared reason</span>
+          <input id="inpReason" type="text" placeholder="e.g. incident INC-4471" autocomplete="off" />
+        </label>
+        <button class="btn btn-activate" id="btnActivate" type="button">
+          <span class="btn-label">Activate</span><span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===================== panel: Schedules ===================== -->
+    <aside class="overlay" id="panelSchedules" hidden>
+      <header class="overlay-head">
+        <button class="icon-btn" data-close type="button" aria-label="Back">
+          <svg viewBox="0 0 20 20" width="16" height="16"><path d="M12 4 6 10l6 6" fill="none"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="overlay-title">Schedules</div>
+      </header>
+      <div class="overlay-body" id="scheduleBody"></div>
+    </aside>
+
+    <!-- ==================== panel: Activation history ==================== -->
+    <aside class="overlay" id="panelHistory" hidden>
+      <header class="overlay-head">
+        <button class="icon-btn" data-close type="button" aria-label="Back">
+          <svg viewBox="0 0 20 20" width="16" height="16"><path d="M12 4 6 10l6 6" fill="none"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="overlay-title">Activation history</div>
+        <button class="icon-btn" id="btnHistReload" type="button" title="Reload history" aria-label="Reload history">
+          <svg viewBox="0 0 20 20" width="16" height="16">
+            <path d="M16 10a6 6 0 1 1-1.8-4.3M16 3.4V7h-3.6" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </header>
+      <div class="seg" id="histFilter" role="tablist">
+        <button class="seg-btn is-on" data-hfilter="all" type="button" role="tab">All</button>
+        <button class="seg-btn" data-hfilter="on" type="button" role="tab">Activations</button>
+        <button class="seg-btn" data-hfilter="off" type="button" role="tab">Deactivations</button>
+      </div>
+      <div class="overlay-body" id="historyBody"></div>
+    </aside>
+
+    <!-- ===================== panel: My permissions ===================== -->
+    <aside class="overlay" id="panelPerms" hidden>
+      <header class="overlay-head">
+        <button class="icon-btn" data-close type="button" aria-label="Back">
+          <svg viewBox="0 0 20 20" width="16" height="16"><path d="M12 4 6 10l6 6" fill="none"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="overlay-title">My permissions</div>
+      </header>
+      <div class="seg" id="permScope" role="tablist">
+        <button class="seg-btn is-on" data-pscope="now" type="button" role="tab">In force now</button>
+        <button class="seg-btn" data-pscope="all" type="button" role="tab">Incl. eligible</button>
+      </div>
+      <div class="searchbar">
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+          <circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10.2 10.2 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input type="search" id="permSearch" placeholder="Filter actions, e.g. users/create" autocomplete="off" />
+      </div>
+      <div class="overlay-body" id="permsBody"></div>
+    </aside>
+
+    <!-- ====================== panel: Admin portals ====================== -->
+    <aside class="overlay" id="panelPortals" hidden>
+      <header class="overlay-head">
+        <button class="icon-btn" data-close type="button" aria-label="Back">
+          <svg viewBox="0 0 20 20" width="16" height="16"><path d="M12 4 6 10l6 6" fill="none"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="overlay-title">Admin portals</div>
+      </header>
+      <div class="overlay-body" id="portalBody"></div>
+      <footer class="overlay-foot">
+        <div class="note">
+          <p>A portal opens in the tab you already have on that host, or in a new one. Only the
+             Azure, Entra and Intune portals feed the extension a session — the rest are shortcuts.</p>
+        </div>
+      </footer>
+    </aside>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <div class="toasts" id="toasts" aria-live="assertive"></div>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

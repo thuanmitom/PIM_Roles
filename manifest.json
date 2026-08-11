@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Entra PIM Roles",
+  "version": "4.0.0",
+  "description": "Activate, deactivate and schedule Entra ID PIM roles, review your activation history and every permission you hold, and jump to any Microsoft admin portal.",
+  "minimum_chrome_version": "111",
+
+  "permissions": ["storage", "alarms", "notifications", "tabs", "webRequest"],
+
+  "host_permissions": [
+    "https://portal.azure.com/*",
+    "https://entra.microsoft.com/*",
+    "https://intune.microsoft.com/*",
+    "https://endpoint.microsoft.com/*",
+    "https://graph.microsoft.com/*"
+  ],
+
+  "background": { "service_worker": "src/background.js", "type": "module" },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Entra PIM Roles",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://portal.azure.com/*",
+        "https://entra.microsoft.com/*",
+        "https://intune.microsoft.com/*",
+        "https://endpoint.microsoft.com/*"
+      ],
+      "js": ["src/inject.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://portal.azure.com/*",
+        "https://entra.microsoft.com/*",
+        "https://intune.microsoft.com/*",
+        "https://endpoint.microsoft.com/*"
+      ],
+      "js": ["src/content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://graph.microsoft.com"
+  }
+}
